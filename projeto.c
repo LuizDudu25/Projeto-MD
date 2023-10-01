@@ -1,3 +1,84 @@
+int mdc (int a, int b)
+{
+    if (a > b)
+    {
+        while (a%b != 0)
+        {
+            int aux;
+            aux = a;
+
+            a = b;
+            b = aux%a;
+        }
+
+        return b;
+    }
+    else
+    {
+        while (b%a != 0)
+        {
+            int aux;
+            aux = b;
+
+            b = a;
+            a = aux%b;
+        }
+
+        return a;
+    }
+}
+
+int primo (long long int a)
+{
+    long long int b;
+
+    if (a <= 1)
+    {
+        return 0;
+    }
+    else
+    {
+        for (b = a - 1; b > 1; b--)
+        {
+            if (a%b == 0)
+            {
+                return 0;
+            }
+        }
+    }
+
+    return 1;
+}
+void encriptando ()
+{
+    char mensagem[1000000];
+    
+    printf("Digite a mensagem:\n");
+    scanf(" ");
+    fgets(mensagem, 1000000, stdin);
+
+    int tam;
+    tam = strlen(mensagem);
+    
+    long long int cifra[tam];
+
+    conversao (cifra, mensagem, tam);
+
+    FILE *cripto = fopen("mensagem.txt", "w");
+    
+    int i;
+    for (i = 0; cifra[i] != 0; i++)
+    {
+        fprintf(cripto, "%lld ", cifra[i]);
+    }
+
+    fclose(cripto);
+
+    printf("\nMENSAGEM ENCRIPTADA COM SUCESSO\n\n");
+
+    return;
+}
+
 void chavepublica ()
 {
     long long int p, q;
