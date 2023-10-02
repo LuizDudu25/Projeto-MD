@@ -76,7 +76,7 @@ void conversao (long long int cifra[], char mensagem[], int tam)
     printf("e: ");
     scanf("%lld", &e);
 
-    or(i = 0; i < tam - 1; i++)
+    for(i = 0; i < tam - 1; i++)
     {
         long long int pot = 1;
         for (int j = 0; j < e; j++)
