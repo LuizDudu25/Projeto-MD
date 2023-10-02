@@ -61,26 +61,30 @@ void conversao (long long int cifra[], char mensagem[], int tam)
     int ascii[tam];
 
     int i;
-    for (i = 0; mensagem[i] != '\n'; i++)
+    for (i = 0; mensagem[i] != '\n' && mensagem[i] != '\0'; i++)
     {
         ascii[i] = mensagem[i];
     }
 
-    int n, e;
+    long long int n, e;
     
-    printf("\nDigite a chave pública:\n");
-    scanf("%d", &n);
-    scanf("%d", &e);
+    printf("\nDigite a chave pública:\n\n");
+    
+    printf("n: ");
+    scanf("%lld", &n);
 
-    for(i = 0; i < tam - 1; i++)
+    printf("e: ");
+    scanf("%lld", &e);
+
+    or(i = 0; i < tam - 1; i++)
     {
-        cifra[i] = 1;
-
-        int j;
-        for (j = 0; j < e; j++)
+        long long int pot = 1;
+        for (int j = 0; j < e; j++)
         {
-            cifra[i] = (cifra[i] * ascii[i])%n;
+            pot = (pot * ascii[i])%n;
         }
+
+        cifra[i] = pot;
     }
 
     cifra[i] = 0;
