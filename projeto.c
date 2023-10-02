@@ -202,7 +202,7 @@ void desencriptando ()
 
         long long int d;
         int phi = (p - 1)*(q - 1);
-        d = inverso (e, phi);
+        d = inverso (e, phi, phi, e%phi, 0, 1, 1, -e/phi);
 
         FILE *mensagem;
         mensagem = fopen ("mensagem.txt", "w");
