@@ -50,7 +50,62 @@ int inverso (int e, int phi)
         }
     }
 }
-// V
+int tamanho (char controle[], int x)
+{
+    int n;
+
+    if (controle[x - 1] == ' ')
+    {
+        n = 0;
+    }
+    else
+    {
+        n = 1;
+    }
+
+    int i;
+    for (i = 0; i < x; i++)
+    {
+        if (controle[i] == ' ')
+        {
+            n++;
+        }
+    }
+
+    return n;
+}
+
+void conversao (int cifra[], char mensagem[], int tam)
+{
+    int ascii[tam];
+
+    int i;
+    for (i = 0; mensagem[i] != '\n'; i++)
+    {
+        ascii[i] = mensagem[i];
+    }
+
+    int n, e;
+    
+    printf("\nDigite a chave pública:\n");
+    scanf("%d", &n);
+    scanf("%d", &e);
+
+    for(i = 0; i < tam - 1; i++)
+    {
+        cifra[i] = 1;
+
+        int j;
+        for (j = 0; j < e; j++)
+        {
+            cifra[i] = (cifra[i] * ascii[i])%n;
+        }
+    }
+
+    cifra[i] = 0;
+
+    return;
+}
 int mdc (int a, int b)
 {
     if (a > b)
