@@ -92,13 +92,13 @@ void conversao (long long int cifra[], char mensagem[], int tam)
     return;
 }
 
-int mdc (int a, int b)
+int mdc (long long int a, long long int b)
 {
     if (a > b)
     {
         while (a%b != 0)
         {
-            int aux;
+            long long int aux;
             aux = a;
 
             a = b;
@@ -111,7 +111,7 @@ int mdc (int a, int b)
     {
         while (b%a != 0)
         {
-            int aux;
+            long long int aux;
             aux = b;
 
             b = a;
