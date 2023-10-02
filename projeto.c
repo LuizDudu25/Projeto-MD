@@ -2,54 +2,35 @@
 #include <string.h>
 #include <ctype.h>
 
-int inverso (int e, int phi)
+long long int inverso (long long int a, long long int b, long long int a1, long long int b1, long long int x, long long int y, long long int s, long long int t)
 {
-    int s, t;
-    s = 1;
-    t = -e/phi;
-
-    if (s*e + t*phi == 1)
+    if (s*a + t*b == 1)
     {
+        if (s < 0)
+        {
+            s += b;
+        }
+        if (s > b)
+        {
+            while (s > b)
+            {
+                s -= b;
+            }
+        }
+
         return s;
     }
     else
     {
-        int s1, t1;
-        s1 = -(phi/(e%phi))*s;
-        t1 = 1 - (phi/(e%phi))*t;
+        int sn, tn;
 
-        if (s1*e + t1*phi == 1)
-        {
-            return s1;
-        }
-        else
-        {
-            int a = e%phi;
-            int b = phi%(e%phi);
+        sn = x - (a1/b1)*s;
+        tn = y - (a1/b1)*t;
 
-            int sn = s -(a/b)*s1;
-            int tn = t -(a/b)*t1;
-
-            while (sn*e + tn*phi != 1)
-            {
-                int aux = a;
-                a = b;
-                b = aux%b;
-                
-                s = s1;
-                t = t1;
-                
-                s1 = sn;
-                t1 = tn;
-                
-                sn = s -(a/b)*s1;
-                tn = t -(a/b)*t1;
-            }
-
-            return sn;
-        }
+        inverso (a, b, b1, a1%b1, s, t, sn, tn);
     }
 }
+
 int tamanho (char controle[], int x)
 {
     int n;
@@ -106,6 +87,7 @@ void conversao (long long int cifra[], char mensagem[], int tam)
 
     return;
 }
+
 int mdc (int a, int b)
 {
     if (a > b)
@@ -181,7 +163,7 @@ void desencriptando ()
         int n;
         n = tamanho(controle, x) + 1;
 
-        int cifra[n];
+        long long int cifra[n];
         int j = 0;
     
         int i;
@@ -205,16 +187,16 @@ void desencriptando ()
             }
         }
 
-        int e, p, q;
+        long long int e, p, q;
         printf("\nDigite os valores de...\n");
         printf("e: ");
-        scanf("%d", &e);
+        scanf("%lld", &e);
         printf("p: ");
-        scanf("%d", &p);
+        scanf("%lld", &p);
         printf("q: ");
-        scanf("%d", &q);
+        scanf("%lld", &q);
 
-        int d;
+        long long int d;
         int phi = (p - 1)*(q - 1);
         d = inverso (e, phi);
 
@@ -223,11 +205,13 @@ void desencriptando ()
         
         for (i = 0; i < n; i++)
         {
-            int caractere = 1;
+            long long int pot = 1;
             for (j = 0; j < d; j++) 
             {
-                caractere = (caractere * cifra[i])%(p*q);
+                pot = (pot * cifra[i])%a;
             }
+
+            char caractere = pot;
 
             fprintf(mensagem, "%c", caractere);
         }
