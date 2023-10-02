@@ -75,7 +75,7 @@ int tamanho (char controle[], int x)
     return n;
 }
 
-void conversao (int cifra[], char mensagem[], int tam)
+void conversao (long long int cifra[], char mensagem[], int tam)
 {
     int ascii[tam];
 
