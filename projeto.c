@@ -1,3 +1,56 @@
+#include <stdio.h>
+#include <string.h>
+#include <ctype.h>
+
+int inverso (int e, int phi)
+{
+    int s, t;
+    s = 1;
+    t = -e/phi;
+
+    if (s*e + t*phi == 1)
+    {
+        return s;
+    }
+    else
+    {
+        int s1, t1;
+        s1 = -(phi/(e%phi))*s;
+        t1 = 1 - (phi/(e%phi))*t;
+
+        if (s1*e + t1*phi == 1)
+        {
+            return s1;
+        }
+        else
+        {
+            int a = e%phi;
+            int b = phi%(e%phi);
+
+            int sn = s -(a/b)*s1;
+            int tn = t -(a/b)*t1;
+
+            while (sn*e + tn*phi != 1)
+            {
+                int aux = a;
+                a = b;
+                b = aux%b;
+                
+                s = s1;
+                t = t1;
+                
+                s1 = sn;
+                t1 = tn;
+                
+                sn = s -(a/b)*s1;
+                tn = t -(a/b)*t1;
+            }
+
+            return sn;
+        }
+    }
+}
+// V
 int mdc (int a, int b)
 {
     if (a > b)
@@ -49,6 +102,89 @@ int primo (long long int a)
 
     return 1;
 }
+
+void desencriptando ()
+{
+    FILE *cripto;
+    cripto = fopen("mensagem.txt", "r");
+
+    if (cripto == NULL)
+    {
+        printf("Arquivo de mensagem não encontrado!\n");
+    }
+    else
+    {
+        printf("Arquivo de mensagem encontrado!\n");
+
+        char controle[1000000];
+        fgets(controle, 1000000, cripto);
+        fclose(cripto);
+        
+        int x;
+        x = strlen(controle);
+
+        int n;
+        n = tamanho(controle, x) + 1;
+
+        int cifra[n];
+        int j = 0;
+    
+        int i;
+        for (i == 0; i < n && controle[j] != '\0'; i++)
+        {
+            cifra[i] = 0;
+        
+            if (isdigit(controle[j]) != 0)
+            {
+                while (isdigit(controle[j]) != 0)
+                {
+                    cifra[i] = 10*(cifra[i]) + (controle[j] - '0');
+
+                    j++;
+                }
+            }
+            else
+            {
+                j++;
+                i--;    
+            }
+        }
+
+        int e, p, q;
+        printf("\nDigite os valores de...\n");
+        printf("e: ");
+        scanf("%d", &e);
+        printf("p: ");
+        scanf("%d", &p);
+        printf("q: ");
+        scanf("%d", &q);
+
+        int d;
+        int phi = (p - 1)*(q - 1);
+        d = inverso (e, phi);
+
+        FILE *mensagem;
+        mensagem = fopen ("mensagem.txt", "w");
+        
+        for (i = 0; i < n; i++)
+        {
+            int caractere = 1;
+            for (j = 0; j < d; j++) 
+            {
+                caractere = (caractere * cifra[i])%(p*q);
+            }
+
+            fprintf(mensagem, "%c", caractere);
+        }
+
+        fclose(mensagem);
+
+        printf("\nMENSAGEM DESENCRIPTADA COM SUCESSO!\n\n");
+    }
+    
+    return;
+}
+
 void encriptando ()
 {
     char mensagem[1000000];
